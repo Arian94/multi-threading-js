@@ -1,0 +1,10 @@
+{
+    "name": "multi_threading_js",
+    "version": "1.0.0",
+    "main": "/js-files/single-thread.js",
+    "license": "MIT",
+    "scripts": {
+        "serve": "tsc -p tsconfig.json && npx serve ."
+    }
+}
+
