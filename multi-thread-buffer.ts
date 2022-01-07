@@ -6,7 +6,7 @@ class FindPrimeMultiWithBuffer {
             summary = document.getElementsByTagName('summary')[2]
         let workers: Worker[] = []
 
-        for (let i = 0; i < WORKER_THREADS; i++)
+        for (let i = 0; i < NUMBER_OF_THREADS; i++)
             workers[i] = new Worker('/js-files/worker-buffer.js', { type: 'module' })
 
         document.getElementById('multiThreadWithBuffer')!!.addEventListener('click', () => {
@@ -14,16 +14,16 @@ class FindPrimeMultiWithBuffer {
             loading.style.visibility = 'visible'
 
             const { value } = input,
-                interval = (+value - 2) / WORKER_THREADS,
+                interval = (+value - 2) / NUMBER_OF_THREADS,
                 now = new Date().getTime(),
                 buffer = new SharedArrayBuffer(4 * (+value - 1)),
                 view = new Uint32Array(buffer)
 
             let lowerBound = 2,
                 upperBound = interval + lowerBound,
-                count = WORKER_THREADS
+                count = NUMBER_OF_THREADS
 
-            for (let i = 0; i < WORKER_THREADS; i++) {
+            for (let i = 0; i < NUMBER_OF_THREADS; i++) {
                 workers[i].postMessage({ lowerBound, upperBound, buffer })
                 lowerBound = Math.floor(upperBound) + 1
                 upperBound += interval

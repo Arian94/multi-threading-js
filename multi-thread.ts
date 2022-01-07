@@ -1,4 +1,4 @@
-const WORKER_THREADS = 4
+const NUMBER_OF_THREADS = 4
 
 class FindPrimeMulti {
     constructor() {
@@ -8,7 +8,7 @@ class FindPrimeMulti {
             summary = document.getElementsByTagName('summary')[1]
         let workers: Worker[] = []
 
-        for (let i = 0; i < WORKER_THREADS; i++)
+        for (let i = 0; i < NUMBER_OF_THREADS; i++)
             workers[i] = new Worker('/js-files/worker.js', { type: 'module' })
 
         document.getElementById('multiThread')!!.addEventListener('click', () => {
@@ -16,14 +16,14 @@ class FindPrimeMulti {
             loading.style.visibility = 'visible'
 
             const { value } = input,
-                interval = (+value - 2) / WORKER_THREADS,
+                interval = (+value - 2) / NUMBER_OF_THREADS,
                 now = new Date().getTime()
             let lowerBound = 2,
                 upperBound = interval + lowerBound,
-                count = WORKER_THREADS,
+                count = NUMBER_OF_THREADS,
                 stringifiedPrimesArray = ''
 
-            for (let i = 0; i < WORKER_THREADS; i++) {
+            for (let i = 0; i < NUMBER_OF_THREADS; i++) {
                 workers[i].postMessage({ lowerBound, upperBound })
                 lowerBound = Math.floor(upperBound) + 1
                 upperBound += interval
